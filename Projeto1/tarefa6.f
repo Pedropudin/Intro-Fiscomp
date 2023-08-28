@@ -1,32 +1,25 @@
-c      program complex
-c
-c      complex z
-c
-c      z = (1,2)
-c
-c      write(*,*) z
-c
-c      end program
+C     Dado um número N, resolver a equação abaixo para z complexo
+C     (z-2)^N = 3
 
+      program complex
 
+      !complex z
+      pi = 3.14159
 
+      write(*,*) "Escreva um número inteiro N"
+      read(*,*) N
 
-!Programa o github
-      program Complexo
+      rho = 3**(1./N)
+      theta = (2*pi)/N
 
-      complex*8  z
-      print*, 'Informe N'
-      read*, N
-      
-      !Como não há parte complexa, o ângulo theta é zero
-      
-      pi=3.14159
-      
-      do k=1, N
-            pr = 3e0**(1e0/N)*cos((2*pi*k)/N)+2
-            pii = 3e0**(1e0/N)*sin((2*pi*k)/N)
-            z=  pr*(1,0) + pii*(0,1)
-            print*, k,': z =', z
+      do i=1,N
+            a = rho*cos(theta*i) + 2
+            b = rho*sin(theta*i)
+            write(*,*) a,b
       end do
-      stop
-      end program Complexo
+
+      end program
+
+      !Acho que tá funcionando, falta usar o valor complexo que eu acho que ele quer que use e deixar mais elegante
+      !Pra explicar eu posso pensar no gráfico, porque o -2 desloca o gráfico pra direita
+      !e o valor de N divide a esfera em N partes

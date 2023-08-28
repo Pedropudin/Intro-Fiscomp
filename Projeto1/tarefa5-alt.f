@@ -3,7 +3,7 @@ c     A série é -\sum_{n=1}^\infin \frac{(1-x)^n}{n}
 
       program ln
 
-      erro = 1e-10
+      erro = 1e-5
       n = 1
       vmax = 2
 
@@ -31,7 +31,7 @@ c     A série é -\sum_{n=1}^\infin \frac{(1-x)^n}{n}
             term = -(((1-x)**n)/n)
             n = n+1
             res = res + term
-            write(*,*) term
+            !write(*,*) term
       end do
       end
 
@@ -49,3 +49,15 @@ c     A série é -\sum_{n=1}^\infin \frac{(1-x)^n}{n}
 
       !Consegui fazer funcionar para x>2 mas ele tá demorando muito, não sei se é o esperado
       !Posso usar o ln(2) já pré definido pra diminuir as contas, talvez assim ele seja minimamente mais rápido
+      !Não esquecer de arrumar o que eu fiz depois
+
+C     Teste com ln(2) e erro de 1e-5
+      !real	0m0,456s
+      !user	0m0,354s
+      !sys	0m0,094s
+
+C     Testei com ln(2)=0.693137527 com erro de 1e-9
+      !real	7m37,591s
+      !user	7m35,442s
+      !sys	0m0,652s
+

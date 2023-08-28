@@ -1,25 +1,30 @@
       program sort
 
-      real, dimension(:), allocatable :: bigger
+      real, dimension(:), allocatable :: smaller
+      write(*,*) "Quantos número você quer ordenar"
       read(*,*) max
-      allocate(bigger(max))
-
+      allocate(smaller(max))
+      Izeros = 0
       open(10,file='fort.1')
 
       do 
             read(10,*,end=100) val
+            if(val.ne.0.) then
             do i=1,max
-                  if(val.gt.bigger(i)) then
-                        call add(bigger,max,val,i)
+                  if(val.lt.smaller(i).or.smaller(i).eq.0.) then
+                        call add(smaller,max,val,i)
                         go to 101
                   end if
             end do
 101         continue
+            else
+                  Izeros = Izeros + 1
+            end if
       end do
 100   continue
       
       do i=1,max
-            write(*,*) bigger(i)
+            write(*,*) smaller(i)
       end do
       
 
@@ -42,5 +47,5 @@ c     Adiciona um número em uma dada posição do array, colocando todos os out
 
       end subroutine
 
-c     Acho que tá funcionando
-c     Falta colocar a saída num arquivo e testar mais
+      !Acho que tá funcionando mas tá muito mal otimizado
+      !Falta colocar a saída num arquivo e testar mais

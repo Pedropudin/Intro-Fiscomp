@@ -9,12 +9,9 @@ C     Recebe as coordenadas dos vetores
       read(*,*) x2,y2,z2
       
 C     Calcula o produto vetorial entre eles e divide por 2
-      prod = sqrt((y1*z2-z1y2)**2+(z1*x2-x1*z2)**2+(x1*y2-y1*x2)**2)
-      A = prod/2
+      prod = sqrt((y1*z2-z1*y2)**2+(z1*x2-x1*z2)**2+(x1*y2-y1*x2)**2)
 
 C     Imprime o resultado
-      write(*,*) "A área do triângulo em questão seria", A
+      write(*,*) "A área do triângulo em questão seria", prod/2.
 
       end program area
-
-      !Falta testar
