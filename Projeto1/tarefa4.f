@@ -1,14 +1,15 @@
-c     Escreva um programa que dado um número N inteiro, calcule os números primos
-c     menores ou igual a N , e o número deles, imprimindo os seus resultado em um arquivo de
-c     saı́da. Teste seus resultados para N = 100, 1000, 10000.
+c     Escreva um programa que dado um número N inteiro, calcule os números primos menores
+c     ou igual a N , e o número deles, imprimindo os seus resultado em um arquivo de saı́da.
 
       program primes
 
+c     Recebe o número máximo e abre o arquivo
       write(*,*) "Escreva um número inteiro"
       read(*,*) N
       open(2,file="primes.txt")
       
-
+c     Loop principal
+c     Itera por todos os números em [2,N]
       do i=2,N
             call isPrime(i,res)
             write(*,*) i,res
@@ -17,6 +18,7 @@ c     saı́da. Teste seus resultados para N = 100, 1000, 10000.
 
       end program
 
+c     Verifica se o número n é primo
       subroutine isPrime(n,res)
 
       res = 1
