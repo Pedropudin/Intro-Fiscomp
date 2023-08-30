@@ -3,7 +3,7 @@ c     A série é -\sum_{n=1}^\infin \frac{(1-x)^n}{n}
 
       program ln
 
-      erro = 1e-5
+      erro = 1.0e-5
       n = 1
       vmax = 2
 
@@ -12,9 +12,9 @@ c     A série é -\sum_{n=1}^\infin \frac{(1-x)^n}{n}
 
       call fatorar(x,n2,r)
 
-      call serie(vmax,n,erro,aln2)
+      aln2=serie(vmax,erro)
 
-      call serie(r,n,erro,ares)
+      ares=serie(r,erro)
 
       res = n2*aln2 + ares
 
@@ -22,17 +22,15 @@ c     A série é -\sum_{n=1}^\infin \frac{(1-x)^n}{n}
 
       end program
 
-
-      subroutine serie(x,n,erro,res)
-      res = 0d0
-      n=1
-      term = 100 !Começa em um valor qualquer que seja maior do que o erro
-      do while(abs(term).gt.erro)
-            term = -(((1-x)**n)/n)
-            n = n+1
-            res = res + term
-            !write(*,*) term
-      end do
+      function serie(x,erro)
+            serie = 0
+            i=1
+            do 
+                  term = ((1-x)**i)/i
+                  serie = serie - term
+                  if(abs(term).lt.erro) exit
+                  i = i+1
+            end do
       end
 
 
@@ -47,9 +45,7 @@ c     A série é -\sum_{n=1}^\infin \frac{(1-x)^n}{n}
 
       end
 
-      !Consegui fazer funcionar para x>2 mas ele tá demorando muito, não sei se é o esperado
       !Posso usar o ln(2) já pré definido pra diminuir as contas, talvez assim ele seja minimamente mais rápido
-      !Não esquecer de arrumar o que eu fiz depois
 
 C     Teste com ln(2) e erro de 1e-5
       !real	0m0,456s

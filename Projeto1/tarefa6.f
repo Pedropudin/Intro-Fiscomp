@@ -3,23 +3,24 @@ C     (z-2)^N = 3
 
       program complex
 
-      !complex z
-      pi = 3.14159
+      pi = 4*atan(1.)
 
+c     Recebe o valor N e verifica se ele é válido
       write(*,*) "Escreva um número inteiro N"
       read(*,*) N
+      if(N.eq.0) then
+            write(*,*) "Valor de N inválido"
+            stop
+      end if
 
+c     Primeira solução, sempre aparece
       rho = 3**(1./N)
       theta = (2*pi)/N
 
-      do i=1,N
+c     Rotaciona no plano buscando as outras soluções
+      do i=1,abs(N)
             a = rho*cos(theta*i) + 2
             b = rho*sin(theta*i)
-            write(*,*) a,b
+            write(*,*) "Solução",i,a,b
       end do
-
       end program
-
-      !Acho que tá funcionando, falta usar o valor complexo que eu acho que ele quer que use e deixar mais elegante
-      !Pra explicar eu posso pensar no gráfico, porque o -2 desloca o gráfico pra direita
-      !e o valor de N divide a esfera em N partes

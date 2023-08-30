@@ -8,13 +8,21 @@ c     Recebe o número máximo e abre o arquivo
       read(*,*) N
       open(2,file="primes.txt")
       
+c     Verifica se o intervalo é válido
+      if(N.ge.2) then
+            write(2,*) 2
+      else
+            write(*,*) "Não existem números primos menores que",N
+      end if 
+
 c     Loop principal
-c     Itera por todos os números em [2,N]
-      do i=2,N
+c     Itera por todos os números em [3,N] com passo de 2
+      do i=3,N,2
             call isPrime(i,res)
-            write(*,*) i,res
             if(res.ne.0) write(2,*) i
       end do
+
+      close(2)
 
       end program
 
@@ -22,7 +30,7 @@ c     Verifica se o número n é primo
       subroutine isPrime(n,res)
 
       res = 1
-      do i=2,n-1
+      do i=3,n-1,2
             if(mod(n,i).eq.0)then
                   res = 0
                   go to 10
@@ -31,5 +39,3 @@ c     Verifica se o número n é primo
 10    continue
       end 
 
-      !Acho que tá funcionando, mas dá pra otimizar um pouco mais      
-      !Ele disse que queria de outra maneira, acho que vou acabar tendo que pesquisar as melhores maneiras de fazer essas coisas
