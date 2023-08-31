@@ -10,7 +10,7 @@ c     Lê arquivo de entrada e quantidade de números que serão ordenados
       if(max.gt.maxOrder) then
       write(*,*) "Não é possível ordenar mais de",maxOrder,"números"
       end if
-      open(10,file='fort.1')
+      open(10,file='entrada-3-13696213.txt')
 
 c     Preenche o vetor com o maior número permitido pela precisão
       data smaller /maxOrder*3.4E+38/
@@ -30,6 +30,7 @@ c     Realiza a leitura, avaliação dos valores e contagem de zeros
 101         continue
       end do
 100   continue
+      close(10)
 
 c     Verifica se a quantidade de números no arquivo é suficiente
       if(n.lt.max) then
@@ -38,7 +39,7 @@ c     Verifica se a quantidade de números no arquivo é suficiente
       end if 
 
 c     Escreve o resultado
-      open(11,file='saida3.txt')
+      open(11,file='saida-3-13696213.txt')
       do i=1,max
             write(11,*) smaller(i)
       end do

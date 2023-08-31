@@ -9,7 +9,7 @@ c     Recebe a quantidade de dimensões e o raio da esfera
       write(*,*) "Insira o raio"
       read(*,*) r
 
-      open(1,file='dimensoes-esferas.txt')
+      open(1,file='dimensoes-esferas.dat')
 
 c     Loop principal
 c     Escreve no arquivo o volume da esfera de raio r e dimensões [2,Id]

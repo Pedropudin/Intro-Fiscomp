@@ -54,8 +54,3 @@ c     Encontra a distância de um ponto até a origem
 
       return
       end
-
-      !Acho que tá funcional, mas não testei pra dimensões muito grandes ainda
-      !Nesse site da wikipedia ele dá as fórmulas pra testar:
-      !https://en.wikipedia.org/wiki/Volume_of_an_n-ball
-      !Ele diverge muito da equação que usa, acho que era esperado mas né

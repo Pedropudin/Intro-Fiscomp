@@ -1,24 +1,34 @@
-c     Calcular o valor de ln(x) usando séries
-c     A série é -\sum_{n=1}^\infin \frac{(1-x)^n}{n}
+c     Calcula o valor de ln(x) usando série
 
       program ln
 
+c     Definição de Variáveis
       erro = 1.0e-5
       n = 1
       vmax = 2
 
+c     Recebe e verifica se o valor x é válido
       write(*,*) "Escreva um número real"
       read(*,*) x
+      if(x.le.0.) then
+            write(*,*) "Não é possível calcular o logaritmo de ",x
+            stop
+      end if
 
+c     Fatora o valor x em n2 termos de 2, com um resto de r
       call fatorar(x,n2,r)
 
-      aln2=serie(vmax,erro)
+c     Calcula o ln(2) caso seja necessário
+      if(n2.ne.0) then
+            aln2=serie(vmax,erro)
+      end if
 
+c     Calcula o ln(r) e a resposta final
       ares=serie(r,erro)
-
       res = n2*aln2 + ares
 
-      write(*,*) "ln(",x,") =", res
+      write(*,*) log(x)
+      write(*,*) res
 
       end program
 
@@ -44,16 +54,4 @@ c     A série é -\sum_{n=1}^\infin \frac{(1-x)^n}{n}
       end do
 
       end
-
-      !Posso usar o ln(2) já pré definido pra diminuir as contas, talvez assim ele seja minimamente mais rápido
-
-C     Teste com ln(2) e erro de 1e-5
-      !real	0m0,456s
-      !user	0m0,354s
-      !sys	0m0,094s
-
-C     Testei com ln(2)=0.693137527 com erro de 1e-9
-      !real	7m37,591s
-      !user	7m35,442s
-      !sys	0m0,652s
 
