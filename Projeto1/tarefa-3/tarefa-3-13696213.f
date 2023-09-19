@@ -47,7 +47,8 @@ c     Escreve o resultado
 
       end program
 
-c     Adiciona um número em uma dada posição do array, colocando todos os outros números uma posição à frente      
+c     Adiciona um número em uma dada posição do array, colocando
+c     todos os outros números uma posição à frente      
       subroutine add(vector,itam,val,ipos)
             
       dimension vector(itam)

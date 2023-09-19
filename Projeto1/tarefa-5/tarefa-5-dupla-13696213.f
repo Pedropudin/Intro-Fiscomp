@@ -5,9 +5,8 @@ c     Usando precisão dupla
       implicit real*8(a-h,o-z)
 
 c     Definição de Variáveis
-      erro = 1.0d-6
+      erro = 1.0d-15
       n = 1
-      vmax = 2
 
 c     Recebe e verifica se o valor x é válido
       write(*,*) "Escreva um número real"
@@ -17,43 +16,23 @@ c     Recebe e verifica se o valor x é válido
             stop
       end if
 
-c     Fatora o valor x em n2 termos de 2, com um resto de r
-      call fatorar(x,n2,r)
-
-      if(n2.ne.0) then
-            aln2=serie(vmax,erro)
-      end if
-      
-      ares=serie(r,erro)
-
-      res = n2*aln2 + ares
+      res =-serieD(1d0/x,erro)
 
       write(*,*) "ln(",x,") =", res
 
       end program
 
-      function serie(x,erro)
+      function serieD(x,erro)
       implicit real*8(a-h,o-z)
-      serie = 0
+      serieD = 0
       i=1
       do 
             term = ((1-x)**i)/i
-            serie = serie - term
+            write(*,*) term
+            serieD = serieD - term
             if(abs(term).lt.erro) exit
             i = i+1
       end do
-      end
-
-
-      subroutine fatorar(val,n2,r)
-      implicit real*8(a-h,o-z)
-      r = val
-      n2 = 0
-
-      do while(r.gt.2)
-            r = r/2
-            n2 = n2 + 1
-      end do
-
+      return
       end
 
