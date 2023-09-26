@@ -1,14 +1,10 @@
       program andarilhoBi
 
-      parameter(Iseed=0)
+      parameter(Iseed=73)
       parameter(M=10,N=10000,p=0.25e0)
-      dimension iand(M,2),r(2)
-      Rinutil = rand(Iseed)
+      dimension iand(M,2)
+      r = rand(Iseed)
       open(10,file='resultC.txt')
-
-c     Soma dos x e y
-      r(1)=0
-      r(2)=0
 
       do i=1,M
             ix = 0
@@ -18,8 +14,6 @@ c     Soma dos x e y
             end do
             iand(i,1)=ix
             iand(i,2)=iy
-            r(1) = r(1) + ix
-            r(2) = r(2) + iy
       end do
 
 c     Escreve os valores no arquivo
@@ -27,10 +21,10 @@ c     Escreve os valores no arquivo
             write(10,*) i,iand(i,1),iand(i,2)
       end do
 
-      write(10,*) "<r>=",r(1)/M,r(2)/M
+
 
       write(*,*) "Fim da Execução"
-
+      
       end program andarilhoBi
 
       subroutine andar(ix,iy,a,p1,p2,p3)
@@ -44,13 +38,13 @@ c     Escreve os valores no arquivo
             else
                   iy = iy-1
             end if
-
+      
       end
 
-      function Rmod(ix,iy)
+      function r()
 
-      Rmod = sqrt(real(ix)**2 + real(iy)**2)
-      return
+      
+
       end
 
 c      function Rmedia(ival,N,m)
@@ -66,3 +60,4 @@ c            Rmedia = sum/N
 c            
 c            return
 c      end
+      

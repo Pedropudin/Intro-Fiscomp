@@ -27,8 +27,8 @@
             if(Ires.ne.0) write(20,*) i,Ires
       end do
 
-      write(10,*) "<x^1>=",Rx1
-      write(10,*) "<x^2>=",Rx2
+      write(*,*) "<x^1>=",Rx1
+      write(*,*) "<x^2>=",Rx2
 
       write(*,*) "Fim da Execução"
 
@@ -69,8 +69,4 @@
             return
       end
 
-      !Como era de se esperar, nesse caso os valores estão orientados 
-      !Todos giram mais ou menos em torno de 300
-
       !Novamente, falta otimizar algumas coisas e o plot
-      !Mas o resultado tá igual ao do drive pra alguns testes
