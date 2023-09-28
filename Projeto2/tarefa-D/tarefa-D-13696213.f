@@ -2,10 +2,10 @@
       
 c     Declaração de variáveis
       parameter(Iseed=73,p=0.25e0)
-      parameter(M=10000,N=1000,l=10)
+      parameter(M=100,N=100,l=10)
       dimension ipos(M,2), imaxmin(4)
       r = rand(Iseed)
-      open(10,file="resultD.dat")
+      open(10,file="saida-D-13696213.dat")
 
       ipos = 0
 
@@ -30,7 +30,7 @@ c           Calcula a entropia do sistema
             end do
 
 c           Escreve os valores num arquivo
-            !write(10,*) i,s
+            write(10,*) i,s
       end do
 
       write(*,*) "Fim da Execução"

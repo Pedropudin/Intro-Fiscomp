@@ -5,7 +5,7 @@ c     Valor aletório para a seed e quantidade de números gerados
       dimension vector(m) !Vector onde serão armazenados os valores
 
       r = rand(Iseed) !inicia os valores aletaórios
-      open(10,file='resultA.txt')
+      open(10,file='saida-A-13696213.txt')
 
 c     Limpa o vetor, colocando todos os valores em 0
       do i=1,m

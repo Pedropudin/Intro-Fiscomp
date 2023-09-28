@@ -2,10 +2,10 @@
 
 c     Declaração de variáveis
       parameter(Iseed=73)
-      parameter(M=1000,N=1000000,p=0.25e0)
+      parameter(M=1000,N=10,p=0.25e0)
       dimension iand(M,2),r(2),r2(2)
       rAleatorio = rand(Iseed)
-      open(10,file='posC-1000000.dat')
+      open(10,file='saida-10-C-13696213.dat')
 
       r=0
       r2=0

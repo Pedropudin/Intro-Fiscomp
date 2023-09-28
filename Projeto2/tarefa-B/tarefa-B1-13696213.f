@@ -1,34 +1,34 @@
       program andarilho
 
-c     Declaração de variáveis
-      parameter(Iseed=0)
-      parameter(M=10000,N=1000,p=1./5.)
+c     Declaração de variáveis 
+      parameter(Iseed=73)
+      parameter(M=10000,N=1000,p=0.5e0)
       dimension iand(M)
       r = rand(Iseed)
-      open(20,file='histB2_1-5.dat')
+      open(10,file='saida-B1-13696213.dat')
 
-      iand = 0
-
-c     Calcula a posição final dos andarilhos
+c     Calcula a posição de cada um dos andarilhos
       do i=1,M
+            ix = 0
             do j=0,N
-            call andar(iand(i),rand(),p)
+            call andar(ix,rand(),p)
             end do
+            iand(i)=ix
       end do
 
-c     Calcula a posição média e a posição quadrática média
+c     Calcula a posição média e a posição quadrada média
       Rx1 = Rmedia(iand,M,1)
       Rx2 = Rmedia(iand,M,2)
 
+c     Encontra a quantdidade de andarihos em cada posição 
       do i=-N,N
             Ires = Iquant(iand,M,i)
-            !if(Ires.ne.0) write(20,*) i,Ires
+            if(Ires.ne.0) write(10,*) i,",",Ires
       end do
 
 c     Imprime os resultados
-      write(*,*)"<x^1>=",Rx1,"esperado:",N*(-2*p+1.)
-      write(*,*)"<x^2>=",Rx2,"esperado:",N**2+4*N*p*(1-p)-
-     &4*N**2*p*(1-p)
+      write(*,*)"<x>",Rx1,"esperado:",N*(-2*p+1.)
+      write(*,*)"<x^2>",Rx2,"esperado:",N**2+4*N*p*(1-p)-4*N**2*p*(1-p)
 
       write(*,*) "Fim da Execução"
 
@@ -47,7 +47,7 @@ c     número aleatório recebido
       end
 
 c     Calcula quantas vezes determinado elemento 
-c     está presente em um vetor
+c     está presente em um vetor      
       function Iquant(ival,N,j)
 
             dimension ival(N)
@@ -57,7 +57,7 @@ c     está presente em um vetor
                   if(ival(i).eq.j) Iquant = Iquant + 1
             end do
       return
-      end
+      end 
 
 c     Calcula a média de uma potência de um dado vetor
       function Rmedia(ival,N,m)
