@@ -1,24 +1,26 @@
       program entropia
       
+c     Declaração de variáveis
       parameter(Iseed=73,p=0.25e0)
-      parameter(M=100,N=1500,l=5)
+      parameter(M=10000,N=1000,l=10)
       dimension ipos(M,2), imaxmin(4)
       r = rand(Iseed)
       open(10,file="resultD.dat")
 
-      ipos = 0 !zera o vetor
+      ipos = 0
 
+c     Loop principal
       do i=1,N
-            itotal=0
             s=0e0
             imaxmin=0
 
-
+c           Dá 1 passo em todos os andarilhos
             do j=1,M
             call andar(ipos(j,1),ipos(j,2),rand(),p,2*p,3*p)
             call otimizar(imaxmin,ipos(j,1),ipos(j,2))
             end do
 
+c           Calcula a entropia do sistema
             do ix=imaxmin(2),imaxmin(1),l
             do iy=imaxmin(4),imaxmin(3),l
             iquant = ifind(ix,iy,ipos,M,l)
@@ -27,13 +29,16 @@
             end do
             end do
 
-            write(10,*) i,s
+c           Escreve os valores num arquivo
+            !write(10,*) i,s
       end do
 
       write(*,*) "Fim da Execução"
 
       end program entropia
 
+c     Realiza o movimento do andarilho de acordo com o
+c     número aleatório recebido
       subroutine andar(ix,iy,a,p1,p2,p3)
 
       if(a.le.p1) then
@@ -48,6 +53,7 @@
 
       end 
 
+c     Manipula o vetor com os valores máximos e mínimos de x e y
       subroutine otimizar(ivector,ix,iy)
       
       dimension ivector(4)
@@ -65,8 +71,8 @@
 
       end
 
+c     Verifica a quantidade de pontos em um quadrante do plano
       function ifind(i,j,ipontos,M,l)
-      !Verifica a quantidade de pontos nessa posição
 
       dimension ipontos(M,2)
       ifind = 0
@@ -80,5 +86,3 @@
 
       return
       end
-
-      !Acho que tá funcionando, mas o gráfico não tá tão bonito

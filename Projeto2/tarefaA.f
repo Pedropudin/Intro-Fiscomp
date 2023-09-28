@@ -12,7 +12,6 @@ c     Limpa o vetor, colocando todos os valores em 0
             vector(i)=0e0
       end do
 
-c     Loop principal
 c     Pega um valor aleatório e soma a potência correta 
 c     em todas as posições do vetor
       do i=0,N
@@ -36,16 +35,3 @@ c     Calcula a n-ésima potência de x
       f = x**n
       return
       end
-
-
-      !Não consegui tirar nada a princípio dos resultados
-      !Para n=1 ele tende a 0.5 mas para N muito grande fica menor
-      !Para os outros valores de n ele tende a ser cada vez menor
-
-      !O joão disse que ele vai tender à 1/(n+1), ou seja,
-      !Para <x> tende à 1/2, para <x^2> tende a 1/3, etc
-
-      !Por algum motivo com vetor o programa tá pegando lixo na última posição, fiz um loop a mais
-      !pra evitar isso mas não é muito eficiente
-
-      !Uma coisa interessante é que o programa é muito mais rápido com a função 

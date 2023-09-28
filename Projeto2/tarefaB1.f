@@ -1,42 +1,41 @@
       program andarilho
 
-      parameter(Iseed=0)
+c     Declaração de variáveis 
+      parameter(Iseed=73)
       parameter(M=10000,N=1000,p=0.5e0)
       dimension iand(M)
       r = rand(Iseed)
-      open(10,file='resultB1.txt')
       open(20,file='histogramaB1.dat')
 
-c     Loop principal
 c     Calcula a posição de cada um dos andarilhos
       do i=1,M
             ix = 0
             do j=0,N
             call andar(ix,rand(),p)
             end do
-            !write(10,*) i,ix
             iand(i)=ix
       end do
 
-      do i=1,M
-            write(10,*) i,iand(i)
-      end do
-
+c     Calcula a posição média e a posição quadrada média
       Rx1 = Rmedia(iand,M,1)
       Rx2 = Rmedia(iand,M,2)
 
+c     Encontra a quantdidade de andarihos em cada posição 
       do i=-N,N
             Ires = Iquant(iand,M,i)
-            if(Ires.ne.0) write(20,*) i,Ires
+            !if(Ires.ne.0) write(20,*) i,",",Ires
       end do
 
-      write(10,*) "A média para x^1", Rx1
-      write(10,*) "A média para x^2", Rx2
+c     Imprime os resultados
+      write(*,*)"<x>",Rx1,"esperado:",N*(-2*p+1.)
+      write(*,*)"<x^2>",Rx2,"esperado:",N**2+4*N*p*(1-p)-4*N**2*p*(1-p)
 
       write(*,*) "Fim da Execução"
 
       end program andarilho
 
+c     Realiza o movimento do andarilho de acordo com o
+c     número aleatório recebido
       subroutine andar(ix,a,p)
 
       if(a.gt.p) then
@@ -47,6 +46,8 @@ c     Calcula a posição de cada um dos andarilhos
 
       end
 
+c     Calcula quantas vezes determinado elemento 
+c     está presente em um vetor      
       function Iquant(ival,N,j)
 
             dimension ival(N)
@@ -58,6 +59,7 @@ c     Calcula a posição de cada um dos andarilhos
       return
       end 
 
+c     Calcula a média de uma potência de um dado vetor
       function Rmedia(ival,N,m)
 
             dimension ival(N)
@@ -71,7 +73,3 @@ c     Calcula a posição de cada um dos andarilhos
             
             return
       end
-
-      !Falta dar uma otimizada no código e no plot
-      !Falta Descobrir como encontrar a forma analítica
-      !O resto acho que tá funcionando

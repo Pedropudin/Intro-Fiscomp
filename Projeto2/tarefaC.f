@@ -1,32 +1,47 @@
       program andarilhoBi
 
+c     Declaração de variáveis
       parameter(Iseed=73)
-      parameter(M=10,N=10000,p=0.25e0)
-      dimension iand(M,2)
-      r = rand(Iseed)
-      open(10,file='resultC.txt')
+      parameter(M=1000,N=1000000,p=0.25e0)
+      dimension iand(M,2),r(2),r2(2)
+      rAleatorio = rand(Iseed)
+      open(10,file='posC-1000000.dat')
 
+      r=0
+      r2=0
+      iand = 0
+
+c     Calcula a posição final dos andarilhos
       do i=1,M
-            ix = 0
-            iy = 0
             do j=0,N
-            call andar(ix,iy,rand(),p,2*p,3*p)
+            call andar(iand(i,1),iand(i,2),rand(),p,2*p,3*p)
             end do
-            iand(i,1)=ix
-            iand(i,2)=iy
+            r(1) = r(1)+iand(i,1)
+            r(2) = r(2)+iand(i,2)
+            r2(1) = r2(1)+iand(i,1)**2
+            r2(2) = r2(2)+iand(i,2)**2
       end do
 
 c     Escreve os valores no arquivo
       do i=1,M
-            write(10,*) i,iand(i,1),iand(i,2)
+            write(10,*) iand(i,1),iand(i,2)
       end do
 
+c     Calcula <r> e a variância
+      r = r/M
+      r2 = r2/M
+      var = r2(1)+r2(2) - r(1)**2 - r(2)**2
 
+c     Imprime os resultados
+      write(*,*) "<r>",r
+      write(*,*) "var^2",var
 
       write(*,*) "Fim da Execução"
       
       end program andarilhoBi
 
+c     Realiza o movimento do andarilho de acordo com o
+c     número aleatório recebido
       subroutine andar(ix,iy,a,p1,p2,p3)
 
             if(a.le.p1) then
@@ -40,24 +55,3 @@ c     Escreve os valores no arquivo
             end if
       
       end
-
-      function r()
-
-      
-
-      end
-
-c      function Rmedia(ival,N,m)
-c
-c            dimension ival(N)
-c            sum = 0
-c
-c            do i=1,N
-c                  sum = sum + ival(i)**m
-c            end do
-c
-c            Rmedia = sum/N
-c            
-c            return
-c      end
-      

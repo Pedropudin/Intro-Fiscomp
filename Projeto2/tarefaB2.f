@@ -1,39 +1,41 @@
       program andarilho
 
+c     Declaração de variáveis
       parameter(Iseed=0)
-      parameter(M=1000,N=10000,p=0.7)
+      parameter(M=10000,N=1000,p=1./5.)
       dimension iand(M)
       r = rand(Iseed)
-      open(10,file='resultB2.txt')
-      open(20,file='histogramaB2.dat')
+      open(20,file='histB2_1-5.dat')
 
+      iand = 0
+
+c     Calcula a posição final dos andarilhos
       do i=1,M
-            ix = 0
             do j=0,N
-            call andar(ix,rand(),p)
+            call andar(iand(i),rand(),p)
             end do
-            iand(i)=ix
       end do
 
-      do i=1,M
-            write(10,*) i,iand(i)
-      end do
-
+c     Calcula a posição média e a posição quadrática média
       Rx1 = Rmedia(iand,M,1)
       Rx2 = Rmedia(iand,M,2)
 
       do i=-N,N
             Ires = Iquant(iand,M,i)
-            if(Ires.ne.0) write(20,*) i,Ires
+            !if(Ires.ne.0) write(20,*) i,Ires
       end do
 
-      write(*,*) "<x^1>=",Rx1
-      write(*,*) "<x^2>=",Rx2
+c     Imprime os resultados
+      write(*,*)"<x^1>=",Rx1,"esperado:",N*(-2*p+1.)
+      write(*,*)"<x^2>=",Rx2,"esperado:",N**2+4*N*p*(1-p)-
+     &4*N**2*p*(1-p)
 
       write(*,*) "Fim da Execução"
 
       end program andarilho
 
+c     Realiza o movimento do andarilho de acordo com o
+c     número aleatório recebido
       subroutine andar(ix,a,p)
 
       if(a.gt.p) then
@@ -44,6 +46,8 @@
 
       end
 
+c     Calcula quantas vezes determinado elemento 
+c     está presente em um vetor
       function Iquant(ival,N,j)
 
             dimension ival(N)
@@ -55,6 +59,7 @@
       return
       end
 
+c     Calcula a média de uma potência de um dado vetor
       function Rmedia(ival,N,m)
 
             dimension ival(N)
@@ -68,5 +73,3 @@
             
             return
       end
-
-      !Novamente, falta otimizar algumas coisas e o plot
