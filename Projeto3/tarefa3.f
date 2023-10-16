@@ -1,39 +1,54 @@
 c     x^3 - 4x^2 - 59x + 126
       program raizes
       implicit real*8 (a-h,o-z)
+      parameter(h=1d-1)
 
+      open(10,file="res-direta.txt")
+      open(20,file="res-newton.txt")
+      open(30,file="res-secante.txt")
+
+      do k=-100,99,1
 c     Busca direta?
-      !x=-10d0
-      !do i=1,3
-      !do while(abs(f(x)).ge.1d-6)
-      !x=x+1d-1
-      !end do
-      !write(*,*) "Uma das raizes eh ", x
-      !x=x+1d-1
-      !end do
+      ant=k/10d0
+      x=ant+h
+      passo=h
+      if(f(ant)*f(x).le.0d0) then
+            do i=1,6
+                  passo=passo/2d0
+                  ant=ant+passo
+                  if(f(ant)*f(x).gt.0d0) then
+                        ant=ant-passo
+                        x=x-passo
+                  end if
+            end do
+            write(10,*) (x+ant)/2d0
+      end if
 
 c     Newton-Rhapson
-      !Quais números começo pra cada raiz?
-      !do i=-100,100,1
-      !x = i/10
-      !do j=1,6
-      !x = x- f(x)/df(x)
-      !write(*,*) x
-      !end do
-      !write(*,*) "+=========+"
-      !end do
+      !Quais números começo pra cada raiz? Acho que todos os números da
+      !busca direta
+      x = k/10d0
+      do j=1,6
+      x = x- f(x)/df(x)
+      end do
+      if(f(x).le.1d-6) write(20,*) x
 
 c     Secante
       !Também não sei com quais números começo
-      x=10
-      ant=x-1d-1      
+      ant=k/10d0
+      x=ant+h
       do i=1,6
       prox=x-f(x)*((x-ant)/(f(x)-f(ant)))
       ant=x
       x=prox
-      write(*,*) x
+      end do
+      if(f(x).le.1d-6) write(30,*) x
+      
       end do
 
+      close(10)
+      close(20)
+      close(30)
 
       write(*,*) "Fim da Execução"
 

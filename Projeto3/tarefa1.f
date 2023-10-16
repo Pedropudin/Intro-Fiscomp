@@ -7,6 +7,10 @@ c     Declaração de Variáveis
 c     Resultado das derivadas
       parameter(df=9.79678201383810)
       parameter(ddf=64.0983245494729,dddf=671.514613457867)
+      !pi=4d0*atan(1d0)
+      !df=0.
+      !ddf=-(pi)**2*sin(pi*x)
+      !dddf=0.
       open(10,file='valh.txt')
       open(20,file='result1.txt')
 
@@ -40,10 +44,10 @@ c     Escreve os valores calculados num arquivo
       write(20,250) 'EXATO',df,df,df,df,ddf,dddf
 
 c     Formatação
-100   format('|',A9,6('|',A14),'|')
-150   format('----------',6('---------------'),'-')
-200   format('|',f9.8,6("|",f14.4),'|')
-250   format('|',A9,6('|',f14.9),'|')
+100   format('|',A9,6('|',A21),'|')
+150   format('----------',6('----------------------'),'-')
+200   format('|',f9.8,6("|",f21.11),'|')
+250   format('|',A9,6('|',f21.11),'|')
 
       close(10)
       close(20)
@@ -56,5 +60,7 @@ c     Função f(x) que foi derivada
       real*8 function f(x)
       implicit real*8 (a-h,o-z)
       f=exp(x/2)*tan(2*x)
+      !parameter(pi=4d0*atan(1d0))
+      !f=sin(pi*x)
       return
       end
