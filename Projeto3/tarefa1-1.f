@@ -4,21 +4,18 @@
 c     Declaração de Variáveis
       parameter(x=1./2.)
 
-c     Resultado das derivadas
       parameter(df=9.79678201383810)
       parameter(ddf=64.0983245494729,dddf=671.514613457867)
-      open(10,file='valh.txt')
-      open(20,file='result1.txt')
 
-      write(20,100) "n",'simetrica3','frente2','traz2','simetrica5',
+      open(10,file='graph1.csv')
+      open(20,file='valh2.txt')
+
+      write(10,100) "n",'simetrica3','frente2','traz2','simetrica5',
      &'d2simetrica5','d3anti5'
-      write(20,150)
 
-c     Loop principal
-c     Itera pelas quantidades de h colocadas em "valh.txt"
-      do i=1,14
+      do i=1,30
 
-      read(10,*) h
+      read(20,*) h
       
 c     Calcula todos os valores
       df2f = (f(x+h) - f(x))/h
@@ -29,19 +26,14 @@ c     Calcula todos os valores
       dddf5a=(-f(x-2*h)+2*f(x-h)-2*f(x+h)+f(x+2*h))/(2*h**3)
 
 c     Escreve os valores calculados num arquivo
-      write(20,200) h,df-df3s,df-df2f,df-df2t,df-df5s,ddf-ddf5s,
+      write(10,200) h,df-df3s,df-df2f,df-df2t,df-df5s,ddf-ddf5s,
      &dddf-dddf5a
 
       end do
 
-      write(20,150)
-      write(20,250) 'EXATO',df,df,df,df,ddf,dddf
-
 c     Formatação
-100   format('|',A9,6('|',A21),'|')
-150   format('----------',6('----------------------'),'-')
-200   format('|',f9.8,6("|",f21.11),'|')
-250   format('|',A9,6('|',f21.11),'|')
+100   format(A,6(",",A))
+200   format(F12.10,6(",",F25.5))
 
       close(10)
       close(20)

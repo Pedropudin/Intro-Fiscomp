@@ -8,12 +8,16 @@ c     x^3 - 4x^2 - 59x + 126
       open(30,file="res-secante.txt")
 
       do k=-100,99,1
-c     Busca direta?
+            
+c     Busca direta
+      i=0
       ant=k/10d0
       x=ant+h
       passo=h
-      if(f(ant)*f(x).le.0d0) then
-            do i=1,6
+c     Caso Geral
+      if(f(ant)*f(x).lt.0d0) then
+            do while(f((x)).ge.1d-6)
+                  i=i+1
                   passo=passo/2d0
                   ant=ant+passo
                   if(f(ant)*f(x).gt.0d0) then
@@ -21,30 +25,40 @@ c     Busca direta?
                         x=x-passo
                   end if
             end do
-            write(10,*) (x+ant)/2d0
+            write(10,100) (x+ant)/2d0
+            write(10,*) i
+c     Caso Particular: raiz (mod passo) = 0
+      else if(abs(f(x)).lt.1d-6) then
+            write(10,*) "É exatamente", x
       end if
 
 c     Newton-Rhapson
-      !Quais números começo pra cada raiz? Acho que todos os números da
-      !busca direta
       x = k/10d0
-      do j=1,6
+      y=x
+      i=0
+      do while(abs(f(x)).gt.1d-6)
+      i=i+1
       x = x- f(x)/df(x)
       end do
-      if(f(x).le.1d-6) write(20,*) x
+      if(f(x).le.1d-6) write(20,200) y,x,i
 
 c     Secante
-      !Também não sei com quais números começo
       ant=k/10d0
       x=ant+h
-      do i=1,6
+      y=ant
+      i=0
+      do while(abs(f(x)).gt.1d-6)
       prox=x-f(x)*((x-ant)/(f(x)-f(ant)))
       ant=x
       x=prox
+      i=i+1
       end do
-      if(f(x).le.1d-6) write(30,*) x
+      write(30,200) y,x,i
       
       end do
+
+100   format(f9.6)
+200   format(f5.1,",",f9.6,",",i5)
 
       close(10)
       close(20)

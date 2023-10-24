@@ -7,7 +7,7 @@
       a = 1
       b = 0
 
-      write(10,100) "N","h","Trap","Simp","Bode"
+      write(10,100) "N","h","Trap","Simp","Boole"
 
       do i=0,9
 
@@ -30,16 +30,16 @@ c     Método do Simpsons
       end do
       resSimp=abs(resSimp-res)
 
-c     Método do Bode
-      resBode = 0
+c     Método do Boole
+      resBoole = 0
       do j=0,int(aN)-1,4
-            bode=(2*h/45)*(7*f(j*h)+32*f(h*(j+1))+12*f(h*(j+2))+
+            boole=(2*h/45)*(7*f(j*h)+32*f(h*(j+1))+12*f(h*(j+2))+
      &32*f(h*(j+3))+7*f(h*(j+4)))
-            resBode = resBode + bode
+            resBoole = resBoole + boole
       end do
-      resBode=abs(resBode-res)
+      resBoole=abs(resBoole-res)
 
-      write(10,200) int(aN),h,resTrap,resSimp,resBode
+      write(10,200) int(aN),h,resTrap,resSimp,resBoole
 
       end do
 
