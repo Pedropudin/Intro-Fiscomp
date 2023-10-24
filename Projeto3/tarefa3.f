@@ -1,12 +1,14 @@
-c     x^3 - 4x^2 - 59x + 126
       program raizes
       implicit real*8 (a-h,o-z)
-      parameter(h=1d-1)
 
+c     Declaração das Variáveis
+      parameter(h=1d-1)
       open(10,file="res-direta.txt")
       open(20,file="res-newton.txt")
       open(30,file="res-secante.txt")
 
+c     Loop Principal
+c     Itera por todos os chutes para os métodos
       do k=-100,99,1
             
 c     Busca direta
@@ -14,7 +16,7 @@ c     Busca direta
       ant=k/10d0
       x=ant+h
       passo=h
-c     Caso Geral
+      !Caso Geral
       if(f(ant)*f(x).lt.0d0) then
             do while(f((x)).ge.1d-6)
                   i=i+1
@@ -27,7 +29,7 @@ c     Caso Geral
             end do
             write(10,100) (x+ant)/2d0
             write(10,*) i
-c     Caso Particular: raiz (mod passo) = 0
+      !Caso Particular: raiz (mod passo) = 0
       else if(abs(f(x)).lt.1d-6) then
             write(10,*) "É exatamente", x
       end if
@@ -57,6 +59,7 @@ c     Secante
       
       end do
 
+c     Formatação
 100   format(f9.6)
 200   format(f5.1,",",f9.6,",",i5)
 
@@ -68,20 +71,16 @@ c     Secante
 
       end program raizes
 
+c     Função f(x) para encontrar as raízes
       real*8 function f(x)
       implicit real*8 (a-h,o-z)
       f=x**3 - 4*x**2 - 59*x + 126
       return
       end
 
+c     Função f'(x) utilizada no método de Newton-Rhapson
       real*8 function df(x)
       implicit real*8 (a-h,o-z)
       df=3*x**2 - 8*x - 59
       return
       end
-
-
-      !As raízes são -7, 2, 9
-
-      !Não entendi o método de newton
-      !A busca direta também não sei se tá muito legal não

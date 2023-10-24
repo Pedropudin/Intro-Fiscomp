@@ -1,3 +1,5 @@
+c     Programa auxiliar da Tarefa A
+c     Calcula as derivadas para a função sin(pi x)
       program derivada
       implicit real*8 (a-h,o-z)
 
@@ -5,10 +7,10 @@ c     Declaração de Variáveis
       parameter(x=1./2.)
 
 c     Resultado das derivadas
-      parameter(df=9.79678201383810)
-      parameter(ddf=64.0983245494729,dddf=671.514613457867)
+      parameter(df=0)
+      parameter(ddf=-(4d0*atan(1d0))**2,dddf=0)
       open(10,file='valh.txt')
-      open(20,file='result1.txt')
+      open(20,file='result1-2.txt')
 
       write(20,100) "n",'simetrica3','frente2','traz2','simetrica5',
      &'d2simetrica5','d3anti5'
@@ -50,9 +52,10 @@ c     Formatação
 
       end program derivada
 
-c     Função f(x) para o calculo da derivada
+c     Função f(x) que foi derivada
       real*8 function f(x)
       implicit real*8 (a-h,o-z)
-      f=exp(x/2)*tan(2*x)
+      pi=4d0*atan(1d0)
+      f=sin(pi*x)
       return
       end

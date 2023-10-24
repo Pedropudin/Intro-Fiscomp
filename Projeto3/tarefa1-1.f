@@ -1,9 +1,12 @@
+c     Função auxiliar da tarefa A utilizada para gerar o
+c     arquivo csv usado para plotar os gráficos
       program derivada
       implicit real*8 (a-h,o-z)
 
 c     Declaração de Variáveis
       parameter(x=1./2.)
 
+c     Resultados das Derivadas
       parameter(df=9.79678201383810)
       parameter(ddf=64.0983245494729,dddf=671.514613457867)
 
@@ -13,7 +16,9 @@ c     Declaração de Variáveis
       write(10,100) "n",'simetrica3','frente2','traz2','simetrica5',
      &'d2simetrica5','d3anti5'
 
-      do i=1,30
+c     Loop Principal
+c     Itera por todos os valores de h solicitados no arquivo
+      do i=1,48
 
       read(20,*) h
       
@@ -33,7 +38,7 @@ c     Escreve os valores calculados num arquivo
 
 c     Formatação
 100   format(A,6(",",A))
-200   format(F12.10,6(",",F25.5))
+200   format(F18.16,4(",",F40.30),2(",",F40.5))
 
       close(10)
       close(20)
@@ -42,7 +47,7 @@ c     Formatação
 
       end program derivada
 
-c     Função f(x) que foi derivada
+c     Função f(x)
       real*8 function f(x)
       implicit real*8 (a-h,o-z)
       f=exp(x/2)*tan(2*x)
