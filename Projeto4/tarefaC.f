@@ -9,8 +9,7 @@
       gama = 5d-2
       F_Omega=2d0/3d0
       delta_theta = 1d-3
-
-      F_0 = 0.5 !1.2 !0.5
+      F_0 = 0.3 !1.2 !0.5
       
       theta1 = 0.2
       omega1 = 0d0

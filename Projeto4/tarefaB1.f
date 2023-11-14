@@ -2,18 +2,16 @@
       implicit real*8(a-h,o-z)
       parameter(passo=1e-2,epsilon=1e-2,t_final=5d2,N=1d3)
       parameter(al=9.8,g=9.8,am=1.0)
-      dimension t_centro(int(t_final/passo)) !Acho que é muito, mas 
-      !são todas as possibilidades
-      open(10,file='iniciais.txt')
-      open(20,file='resultB.csv')
+      dimension t_centro(int(t_final/passo))
+      open(10,file='resultB1.csv')
       
-      read(10,*) theta
-      read(10,*) omega
-      read(10,*) gamma
-      read(10,*) F_0
-      read(10,*) F_Omega
+      theta = 1d0
+      omega = 0d0
+      gamma = 0d0
+      F_0 = 0d0
+      F_Omega = 0d0
 
-      tempo = 0.0
+      t = 0.0
       icentro = 0
       ipos = 1
 
@@ -28,33 +26,31 @@ c     Resolvendo a Integral
       valor_N=valor_N+(h/3.)*(f(x-h,theta)+4.*f(x,theta)+f(x+h,theta))
       end do
       valor_N = sqrt((2.*al)/g)*valor_N
-      write(*,*) valor_N + 2.*valor_A
+      write(*,*) "Período calculado com a integral",
+     &valor_N + 2.*valor_A
 
 c     Simulando movimento
-      do while(tempo.lt.t_final)
+      do while(t.lt.t_final)
       omega_prox = omega - (g/al)*sin(theta)*passo -
-     &gamma*omega*passo + F_0*sin(F_Omega*tempo)*passo
+     &gamma*omega*passo + F_0*sin(F_Omega*t)*passo
       theta_prox = theta + omega_prox*passo
 
-      write(20,100) tempo,theta,omega
       call periodo(theta,theta_prox,icentro)
       if(icentro.eq.1) then
-            t_centro(ipos)=tempo
+            t_centro(ipos)=t
             ipos = ipos + 1
       end if
       
       omega=omega_prox
       theta=theta_prox
-      tempo = tempo + passo
+      t = t + passo
       end do
 
       !Período
-      write(*,*) t_centro(4)-t_centro(2)
+      write(*,*) "Período calculado com a simulação",
+     &t_centro(4)-t_centro(2)
 
       close(10)
-      close(20)
-
-100   format(F7.2,2(",",F15.12))
 
       write(*,*) "Fim da Execução"
 
@@ -75,8 +71,6 @@ c     Simulando movimento
       f = 1/sqrt(cos(x) - cos(theta))
       return
       end function
-
-      !Deu muito certo, os valores são muito próximos
       
       !Posso fazer uma média dos períodos depois pra ter uma análise
       !melhor
