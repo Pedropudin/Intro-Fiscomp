@@ -1,23 +1,26 @@
       program tarefaB2
-
       implicit real*8(a-h,o-z)
-      parameter(pi=4d0*atan(1d0))
-      parameter(passo=1e-2,epsilon=1e-2,t_final=5d2,N=1d3)
+      parameter(passo=1e-3,epsilon=1e-3,t_final=7d1,N=1d3,M=1d3)
       parameter(al=9.8,g=9.8,am=1.0)
-      dimension t_centro(int(t_final/passo)) !Acho que é muito, mas 
-      !são todas as possibilidades
-      open(10,file='iniciais.txt')
-      open(20,file='resultB2.csv')
+      open(10,file='resultB2.csv')
       
-      read(10,*) theta
-      read(10,*) omega
-      read(10,*) gamma
-      read(10,*) F_0
-      read(10,*) F_Omega
+      theta_0 = 0.2d0
+      omega = 0d0
+      gamma = 0d0
+      F_0 = 0d0
+      F_Omega = 0d0
 
-      tempo = 0.0
-      icentro = 0
-      ipos = 1
+      delta_theta = 1d-5
+
+      theta = theta_0
+
+      do k=1,M,1
+
+      omega = 0d0
+
+      t = 0.0
+      periodo=0d0
+      ipos = 0
 
 c     Resolvendo a Integral
       valor_A = 2*sqrt((2*al)/g)*(sqrt(epsilon)/sqrt(sin(theta)))
@@ -30,55 +33,62 @@ c     Resolvendo a Integral
       valor_N=valor_N+(h/3.)*(f(x-h,theta)+4.*f(x,theta)+f(x+h,theta))
       end do
       valor_N = sqrt((2.*al)/g)*valor_N
-      write(*,*) valor_N + 2.*valor_A
+      write(*,*) "Período calculado com a integral",
+     &valor_N + 2.*valor_A
 
-c     Pela equação
-      T = 2*pi*sqrt(al/g)*(1+(theta**2/16d0))
-      write(*,*) T
+c     Fórmula analítica
+      write(*,*) "Período calculado com a fórmula",
+     &func_periodo(al,g,theta)
 
 c     Simulando movimento
-      do while(tempo.lt.t_final)
+      do while(t.lt.t_final)
       omega_prox = omega - (g/al)*sin(theta)*passo -
-     &gamma*omega*passo + F_0*sin(F_Omega*tempo)*passo
+     &gamma*omega*passo + F_0*sin(F_Omega*t)*passo
       theta_prox = theta + omega_prox*passo
 
-      write(20,100) tempo,theta,omega
-      call periodo(theta,theta_prox,icentro)
-      if(icentro.eq.1) then
-            t_centro(ipos)=tempo
-            ipos = ipos + 1
+      if(omega*omega_prox.le.0d0) then
+            if(mod(ipos,2).eq.0) then
+                  t_aux = t - periodo
+                  periodo = periodo + t_aux
+                  ipos = ipos + 1
+            else
+                  ipos = ipos + 1
+            end if
       end if
       
       omega=omega_prox
       theta=theta_prox
-      tempo = tempo + passo
+      t = t + passo
       end do
 
       !Período
-      write(*,*) t_centro(4)-t_centro(2)
+      write(*,*) "Período calculado com a simulação",
+     &periodo/((ipos-1)/2)
+
+      write(10,100) theta_0 + delta_theta*k,periodo/((ipos-1)/2),
+     &valor_N + 2.*valor_A,func_periodo(al,g,theta)
+
+      theta = theta_0 + delta_theta*k
+      end do
 
       close(10)
-      close(20)
 
-100   format(F7.2,2(",",F15.12))
+100   format(F15.10,3(",",F25.15))
 
       write(*,*) "Fim da Execução"
 
       end program tarefaB2
 
-      subroutine periodo(theta,theta_prox,icentro)
-      implicit real*8(a-h,o-z)
-      if(theta*theta_prox.le.0.0) then
-            icentro = 1
-      else
-            icentro = 0
-      end if
-      return
-      end
-      
       function f(x,theta)
       implicit real*8(a-h,o-z)
       f = 1/sqrt(cos(x) - cos(theta))
+      return
+      end function
+
+      function func_periodo(al,g,theta)
+      implicit real*8(a-h,o-z)
+      parameter(pi=4d0*atan(1d0))
+      func_periodo = 2d0*pi*sqrt(al/g)*(1+(theta**2)/16d0)
       return
       end function
 

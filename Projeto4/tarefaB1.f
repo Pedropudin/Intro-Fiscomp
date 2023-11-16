@@ -1,19 +1,26 @@
       program tarefaB1
       implicit real*8(a-h,o-z)
-      parameter(passo=1e-2,epsilon=1e-2,t_final=5d2,N=1d3)
+      parameter(passo=1e-3,epsilon=1e-3,t_final=7d1,N=1d3,M=1d3)
       parameter(al=9.8,g=9.8,am=1.0)
-      dimension t_centro(int(t_final/passo))
       open(10,file='resultB1.csv')
       
-      theta = 1d0
+      theta_0 = 0.2d0
       omega = 0d0
       gamma = 0d0
       F_0 = 0d0
       F_Omega = 0d0
 
+      delta_theta = 1d-5
+
+      theta = theta_0
+
+      do k=1,M,1
+
+      omega = 0d0
+
       t = 0.0
-      icentro = 0
-      ipos = 1
+      periodo=0d0
+      ipos = 0
 
 c     Resolvendo a Integral
       valor_A = 2*sqrt((2*al)/g)*(sqrt(epsilon)/sqrt(sin(theta)))
@@ -35,10 +42,14 @@ c     Simulando movimento
      &gamma*omega*passo + F_0*sin(F_Omega*t)*passo
       theta_prox = theta + omega_prox*passo
 
-      call periodo(theta,theta_prox,icentro)
-      if(icentro.eq.1) then
-            t_centro(ipos)=t
-            ipos = ipos + 1
+      if(omega*omega_prox.le.0d0) then
+            if(mod(ipos,2).eq.0) then
+                  t_aux = t - periodo
+                  periodo = periodo + t_aux
+                  ipos = ipos + 1
+            else
+                  ipos = ipos + 1
+            end if
       end if
       
       omega=omega_prox
@@ -48,23 +59,21 @@ c     Simulando movimento
 
       !Período
       write(*,*) "Período calculado com a simulação",
-     &t_centro(4)-t_centro(2)
+     &periodo/((ipos-1)/2)
+
+      write(10,100) theta_0 + delta_theta*k,periodo/((ipos-1)/2),
+     &valor_N + 2.*valor_A
+
+      theta = theta_0 + delta_theta*k
+      end do
 
       close(10)
+
+100   format(F15.10,2(",",F25.15))
 
       write(*,*) "Fim da Execução"
 
       end program tarefaB1
-
-      subroutine periodo(theta,theta_prox,icentro)
-      implicit real*8(a-h,o-z)
-      if(theta*theta_prox.le.0.0) then
-            icentro = 1
-      else
-            icentro = 0
-      end if
-      return
-      end
       
       function f(x,theta)
       implicit real*8(a-h,o-z)
@@ -72,5 +81,4 @@ c     Simulando movimento
       return
       end function
       
-      !Posso fazer uma média dos períodos depois pra ter uma análise
-      !melhor
+      !Acho que o período tá melhor agora

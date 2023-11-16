@@ -1,12 +1,9 @@
       program tarefaB3
-
       implicit real*8(a-h,o-z)
       parameter(pi=4d0*atan(1d0))
       parameter(passo=1e-2,epsilon=1e-2,t_final=1d2,N=1d3)
       parameter(al=9.8,g=9.8,am=1.0)
-      dimension t_centro(int(t_final/passo)) 
-      open(10,file='iniciais.txt')
-      open(20,file='resultB3.csv')
+      open(10,file='resultB3.csv')
       
       theta = 1d0
       omega = 0d0
@@ -24,12 +21,7 @@ c     Simulando movimento
      &gamma*omega*passo + F_0*sin(F_Omega*tempo)*passo
       theta_prox = theta + omega_prox*passo
 
-      write(20,100) tempo,theta,omega
-      call periodo(theta,theta_prox,icentro)
-      if(icentro.eq.1) then
-            t_centro(ipos)=tempo
-            ipos = ipos + 1
-      end if
+      write(10,100) tempo,theta,omega
       
       omega=omega_prox
       theta=theta_prox
@@ -37,23 +29,12 @@ c     Simulando movimento
       end do
 
       close(10)
-      close(20)
 
 100   format(F7.2,2(",",F16.12))
 
       write(*,*) "Fim da Execução"
 
       end program tarefaB3
-
-      subroutine periodo(theta,theta_prox,icentro)
-      implicit real*8(a-h,o-z)
-      if(theta*theta_prox.le.0.0) then
-            icentro = 1
-      else
-            icentro = 0
-      end if
-      return
-      end
       
       function f(x,theta)
       implicit real*8(a-h,o-z)

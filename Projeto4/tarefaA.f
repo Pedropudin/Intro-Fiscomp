@@ -24,13 +24,13 @@ c     Método de Euler
       omega_inc_prox = omega_inc - (g/al)*theta_inc*passo
       theta_inc_prox = theta_inc + omega_inc*passo
       E_c_inc = (1./2.)*am*al**2*omega_inc**2
-      E_p_inc = am*g*al*cos(theta_inc)
+      E_p_inc = am*g*al*(1 - cos(theta_inc))
 
 c     Método de Euler-Cromer
       omega_cor_prox = omega_cor - (g/al)*theta_cor*passo
       theta_cor_prox = theta_cor + omega_cor_prox*passo
       E_c_cor = (1./2.)*am*omega_cor**2*al**2
-      E_p_cor = am*g*al*cos(theta_cor)
+      E_p_cor = am*g*al*(1 - cos(theta_cor))
 
       write(10,100) t,theta_inc,omega_inc,E_c_inc+E_p_inc,theta_cor,
      &omega_cor,E_c_cor+E_p_cor
