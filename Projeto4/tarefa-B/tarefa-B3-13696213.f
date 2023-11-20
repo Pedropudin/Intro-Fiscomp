@@ -3,7 +3,7 @@
       parameter(pi=4d0*atan(1d0))
       parameter(passo=1e-2,epsilon=1e-2,t_final=1d2,N=1d3)
       parameter(al=9.8,g=9.8,am=1.0)
-      open(10,file='resultB3.csv')
+      open(10,file='saida-B3-13696213.csv')
       
       theta = 1d0
       omega = 0d0
@@ -32,7 +32,7 @@ c     Simulando movimento
 
 100   format(F7.2,2(",",F16.12))
 
-      write(*,*) "Fim da Execução"
+      write(*,*) "Fim da Execução da Tarefa B3"
 
       end program tarefaB3
       

@@ -5,7 +5,7 @@ c     Simulação de Pêndulo com aproximação
 c     Definição de Constantes e abertura de arquivos
       parameter(passo=1e-2,pi=4*atan(1d0),t_final=5d2)
       parameter(al=9.8,g=9.8,am=1.0)
-      open(10,file='resultA.csv')
+      open(10,file='saida-A-13696213.csv')
       
 c     Declaração de Variáveis
       t = 0d0
@@ -50,6 +50,6 @@ c     Atualização dos Valores
 c     Formatação dos arquivos
 100   format(F8.3,6(",",F20.7))
 
-      write(*,*) "Fim da Execução"
+      write(*,*) "Fim da Execução da Tarefa A"
 
       end program tarefaA

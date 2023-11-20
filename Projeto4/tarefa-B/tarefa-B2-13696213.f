@@ -1,8 +1,8 @@
-      program tarefaB1
+      program tarefaB2
       implicit real*8(a-h,o-z)
       parameter(passo=1e-3,epsilon=1e-3,t_final=7d1,N=1d3,M=1d3)
       parameter(al=9.8,g=9.8,am=1.0)
-      open(10,file='resultB1.csv')
+      open(10,file='saida-B2-13696213.csv')
       
       theta_0 = 0.2d0
       omega = 0d0
@@ -33,8 +33,12 @@ c     Resolvendo a Integral
       valor_N=valor_N+(h/3.)*(f(x-h,theta)+4.*f(x,theta)+f(x+h,theta))
       end do
       valor_N = sqrt((2.*al)/g)*valor_N
-      write(*,*) "Período calculado com a integral",
-     &valor_N + 2.*valor_A
+c      write(*,*) "Período calculado com a integral",
+c     &valor_N + 2.*valor_A
+
+c     Fórmula analítica
+c      write(*,*) "Período calculado com a fórmula",
+c     &func_periodo(al,g,theta)
 
 c     Simulando movimento
       do while(t.lt.t_final)
@@ -58,27 +62,35 @@ c     Simulando movimento
       end do
 
       !Período
-      write(*,*) "Período calculado com a simulação",
-     &periodo/((ipos-1)/2)
+c      write(*,*) "Período calculado com a simulação",
+c     &periodo/((ipos-1)/2)
 
       write(10,100) theta_0 + delta_theta*k,periodo/((ipos-1)/2),
-     &valor_N + 2.*valor_A
+     &valor_N + 2.*valor_A,func_periodo(al,g,theta)
 
       theta = theta_0 + delta_theta*k
       end do
 
       close(10)
 
-100   format(F15.10,2(",",F25.15))
+100   format(F15.10,3(",",F25.15))
 
-      write(*,*) "Fim da Execução"
+      write(*,*) "Fim da Execução da Tarefa B2"
 
-      end program tarefaB1
-      
+      end program tarefaB2
+
       function f(x,theta)
       implicit real*8(a-h,o-z)
       f = 1/sqrt(cos(x) - cos(theta))
       return
       end function
-      
-      !Acho que o período tá melhor agora
+
+      function func_periodo(al,g,theta)
+      implicit real*8(a-h,o-z)
+      parameter(pi=4d0*atan(1d0))
+      func_periodo = 2d0*pi*sqrt(al/g)*(1+(theta**2)/16d0)
+      return
+      end function
+
+      !Realmente, pra valores pequenos funciona bem
+      !Mas pra valores pequenos o método de integral diverge

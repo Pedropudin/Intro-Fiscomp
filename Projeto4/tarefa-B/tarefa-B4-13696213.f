@@ -5,7 +5,7 @@
       parameter(al=9.8,g=9.8,am=1.0)
       dimension theta(3),omega(3),F_0(3)
       dimension theta_prox(3),omega_prox(3)
-      open(10,file='resultB4.csv')
+      open(10,file='saida-B4-13696213.csv')
       
       theta = 1.0
       omega = 0d0
@@ -47,7 +47,7 @@ c     Simulando movimento
 
 100   format(F9.2,6(",",F23.12))
 
-      write(*,*) "Fim da Execução"
+      write(*,*) "Fim da Execução da Tarefa B4"
 
       end program tarefaB4
       
