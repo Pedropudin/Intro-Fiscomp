@@ -61,7 +61,7 @@ c     Condição de Poincaré
 
       end do
 
-99    format("./tarefa-E/saida-E/saida-E-",I0,"-13696213.csv")
+99    format("./saida-E/saida-E-",I0,"-13696213.csv")
 100   format(F12.2,",",F15.10,5(",",F15.10))
 
       write(*,*) "Fim da Execução da Tarefa E"

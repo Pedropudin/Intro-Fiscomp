@@ -58,7 +58,7 @@ c     Simulando movimento
 
       end do
 
-99    format("./tarefa-D/saida-D/saida-D-13696213-",I0,".csv")
+99    format("./saida-D/saida-D-13696213-",I0,".csv")
 100   format(F20.12,5(",",F20.12))
 
       write(*,*) "Fim da Execução da Tarefa D"
