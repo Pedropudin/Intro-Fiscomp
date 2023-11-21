@@ -16,7 +16,7 @@ def A():
     plt.plot(x,df["Theta"].to_numpy(),label="Método de Euler-Cromer")
     plt.legend()
     plt.xlabel("Tempo")
-    plt.ylabel("Theta")
+    plt.ylabel(r"$\theta$")
     #plt.savefig("./tarefa-A/tarefa-A-graf-posicao-13696213.pdf")
     plt.savefig("./tarefa-A/tarefa-A-graf-posicao-13696213.png")
     plt.clf()
@@ -43,8 +43,8 @@ def B():
     plt.plot(x,df["Simulacao"].to_numpy(),label="Simulação")
     plt.plot(x,df["Integral"].to_numpy(),label="Integral")
     plt.legend()
-    plt.xlabel("Theta")
-    plt.ylabel("Período")
+    plt.xlabel(r"$\theta$")
+    plt.ylabel("Período (T)")
     #plt.savefig("./tarefa-B/tarefa-B1-graf-periodo-13696213.pdf")
     plt.savefig("./tarefa-B/tarefa-B1-graf-periodo-13696213.png")
     plt.clf()
@@ -61,8 +61,8 @@ def B():
     plt.plot(x,df["Integral"].to_numpy(),label="Integral")
     plt.plot(x,df["Formula"].to_numpy(),label="Aproximação Analítica")
     plt.legend()
-    plt.xlabel("Theta")
-    plt.ylabel("Período")
+    plt.xlabel(r"$\theta$")
+    plt.ylabel("Período (T)")
     #plt.savefig("./tarefa-B/tarefa-B2-graf-periodo-13696213.pdf")
     plt.savefig("./tarefa-B/tarefa-B2-graf-periodo-13696213.png")
     plt.clf()
@@ -77,36 +77,51 @@ def B():
 
     plt.plot(x,df["Theta"].to_numpy(),label="Posição")
     plt.xlabel("Tempo")
-    plt.ylabel("Theta")
+    plt.ylabel(r"$\theta$")
     #plt.savefig("./tarefa-B/tarefa-B3-graf-posicao-13696213.pdf")
     plt.savefig("./tarefa-B/tarefa-B3-graf-posicao-13696213.png")
     plt.clf()
 
     print("Plotando Tarefa B4")
 
-    headers = ["Tempo","theta_0","theta_05","theta_12","omega_0","omega_05","omega_12"]
+    headers = ["Tempo","theta_0","theta_02","theta_05","theta_12","omega_0","omega_02","omega_05","omega_12"]
 
     df = pd.read_csv("saida-B4-13696213.csv",names=headers)
 
     x = df["Tempo"].to_numpy()
 
-    plt.plot(x,df["theta_0"].to_numpy())
+    plt.plot(x,df["theta_0"].to_numpy(),label=r"$\theta(t)$")
+    plt.plot(x,df["omega_0"].to_numpy(),label=r"$\omega(t)$")
     plt.xlabel("Tempo")
-    plt.ylabel("Theta")
-    #plt.savefig("./tarefa-B/tarefa-B4-graf-0-13696213.pdf")
-    plt.savefig("./tarefa-B/tarefa-B4-graf-0-13696213.png")
+    plt.ylabel(r"$\theta;\omega$")
+    plt.legend()
+    #plt.savefig("./tarefa-B/tarefa-B4-graf-0_0-13696213.pdf")
+    plt.savefig("./tarefa-B/tarefa-B4-graf-0_0-13696213.png")
     plt.clf()
 
-    plt.plot(x,df["theta_05"].to_numpy())
+    plt.plot(x,df["theta_02"].to_numpy(),label=r"$\theta(t)$")
+    plt.plot(x,df["omega_02"].to_numpy(),label=r"$\omega(t)$")
+    plt.legend()
     plt.xlabel("Tempo")
-    plt.ylabel("Theta")
+    plt.ylabel(r"$\theta;\omega$")
+    #plt.savefig("./tarefa-B/tarefa-B4-graf-0_2-13696213.pdf")
+    plt.savefig("./tarefa-B/tarefa-B4-graf-0_2-13696213.png")
+    plt.clf()
+
+    plt.plot(x,df["theta_05"].to_numpy(),label=r"$\theta(t)$")
+    plt.plot(x,df["omega_05"].to_numpy(),label=r"$\omega(t)$")
+    plt.legend()
+    plt.xlabel("Tempo")
+    plt.ylabel(r"$\theta;\omega$")
     #plt.savefig("./tarefa-B/tarefa-B4-graf-0_5-13696213.pdf")
     plt.savefig("./tarefa-B/tarefa-B4-graf-0_5-13696213.png")
     plt.clf()
 
-    plt.plot(x,df["theta_12"].to_numpy())
+    plt.plot(x,df["theta_12"].to_numpy(),label=r"$\theta(t)$")
+    plt.plot(x,df["omega_12"].to_numpy(),label=r"$\omega(t)$")
+    plt.legend()
     plt.xlabel("Tempo")
-    plt.ylabel("Theta")
+    plt.ylabel(r"$\theta;\omega$")
     #plt.savefig("./tarefa-B/tarefa-B4-graf-1_2-13696213.pdf")
     plt.savefig("./tarefa-B/tarefa-B4-graf-1_2-13696213.png")
     plt.clf()
@@ -122,32 +137,37 @@ def C():
     x = df["Time"].to_numpy()
 
     y=df["0.2"].to_numpy()
-    plt.plot(x,y,label="Força=0.2")
+    plt.plot(x,y,label=r"$F_0=0.2$")
     a,b = min_quad(x,y)
-    plt.plot(x,[a*z + b for z in x],label="Aproximacao")
+    plt.plot(x,[a*z + b for z in x],label="Regressão Linear")
     plt.legend()
-    plt.xlabel("Tempo (s)")
-    plt.ylabel("Diferença de posição")
+    plt.xlabel("Tempo")
+    plt.ylabel(r"$\ln(\Delta \theta)$")
+    plt.text(0,-16,r"$\lambda=$"+f"{round(a,3)}",fontsize=10)
     #plt.savefig("./tarefa-C/tarefa-C-graf-0_2-13696213.pdf")
     plt.savefig("./tarefa-C/tarefa-C-graf-0_2-13696213.png")
     plt.clf()
 
     y=df["0.5"].to_numpy()
-    plt.plot(x,y,label="Força=0.5")
+    plt.plot(x,y,label=r"$F_0=0.5$")
     a,b = min_quad(x,y)
-    plt.plot(x,[a*z + b for z in x],label="Aproximacao")
-    plt.xlabel("Tempo (s)")
-    plt.ylabel("Diferença de posição")
+    plt.plot(x,[a*z + b for z in x],label="Regressão Linear")
+    plt.legend()
+    plt.xlabel("Tempo")
+    plt.ylabel(r"$\ln(\Delta \theta)$")
+    plt.text(70,-12.5,r"$\lambda=$"+f"{round(a,3)}",fontsize=10)
     #plt.savefig("./tarefa-C/tarefa-C-graf-0_5-13696213.pdf")
     plt.savefig("./tarefa-C/tarefa-C-graf-0_5-13696213.png")
     plt.clf()
 
     y=df["1.2"].to_numpy()
-    plt.plot(x,y,label="Força=1.2")
+    plt.plot(x,y,label=r"$F_0=1.2$")
     a,b = min_quad(x,y)
-    plt.plot(x,[a*z + b for z in x],label="Aproximacao")
-    plt.xlabel("Tempo (s)")
-    plt.ylabel("Diferença de posição")
+    plt.plot(x,[a*z + b for z in x],label="Regressão Linear")
+    plt.legend()
+    plt.xlabel("Tempo")
+    plt.ylabel(r"$\ln(\Delta \theta)$")
+    plt.text(70,-12,r"$\lambda=$"+f"{round(a,3)}",fontsize=10)
     #plt.savefig("./tarefa-C/tarefa-C-graf-1_2-13696213.pdf")
     plt.savefig("./tarefa-C/tarefa-C-graf-1_2-13696213.png")
     plt.clf()
@@ -158,20 +178,17 @@ def D():
 
     headers = ["theta-F1","omega-F1","theta-F2","omega-F2","theta-F3","omega-F3"]
 
-    df = []
-
-    for i in range(0,11):
-        df.append(pd.read_csv(f"./tarefa-D/saida-D/saida-D-13696213-{i}.csv",names=headers))
-
-    for i in range(0,11):
-        x=df[i]["theta-F1"].to_numpy()
-        y=df[i]["omega-F1"].to_numpy()
-        plt.scatter(x,y,s=1)
-    #Tá horríve esse, vou pensar nele depois
-    #Mas individualmente ele tá bom
-    #plt.savefig("./tarefa-D/tarefa-D-graf-13696213.png")
-    plt.savefig("./tarefa-D/tarefa-D-graf-13696213.png")
-    plt.clf()
+    for j in range(1,4):
+        for i in range(0,4):
+            df = pd.read_csv(f"./tarefa-D/saida-D/saida-D-13696213-{i}.csv",names=headers)
+            x=df[f"theta-F{j}"].to_numpy()
+            y=df[f"omega-F{j}"].to_numpy()
+            plt.scatter(x,y,s=6-i)
+        plt.xlabel(r"$\theta$")
+        plt.ylabel(r"$\omega$")
+        #plt.savefig("./tarefa-D/tarefa-D-graf-13696213.png")
+        plt.savefig(f"./tarefa-D/tarefa-D-graf-{j}-13696213.png")
+        plt.clf()
 
 #============ Tarefa E ==========#
 def E():
@@ -179,28 +196,16 @@ def E():
 
     headers = ["Time","theta1","omega1","theta2","omega2","theta3","omega3"]
 
-    df = pd.read_csv("saida-E-13696213.csv",names=headers)
+    for j in range(1,4):
+        for i in range(0,4):
+            df = pd.read_csv(f"./tarefa-E/saida-E/saida-E-{i}-13696213.csv",names=headers)
 
-    plt.scatter(df["theta1"].to_numpy(),df["omega1"].to_numpy(),s=3)
-    plt.xlabel("Theta")
-    plt.ylabel("Omega")
-    #plt.savefig("./tarefa-E/tarefa-E-graf-1-13696213.pdf")
-    plt.savefig("./tarefa-E/tarefa-E-graf-1-13696213.png")
-    plt.clf()
-
-    plt.scatter(df["theta2"].to_numpy(),df["omega2"].to_numpy(),s=3)
-    plt.xlabel("Theta")
-    plt.ylabel("Omega")
-    #plt.savefig("./tarefa-E/tarefa-E-graf-2-13696213.pdf")
-    plt.savefig("./tarefa-E/tarefa-E-graf-2-13696213.png")
-    plt.clf()
-
-    plt.scatter(df["theta3"].to_numpy(),df["omega3"].to_numpy(),s=3)
-    plt.xlabel("Theta")
-    plt.ylabel("Omega")
-    #plt.savefig("./tarefa-E/tarefa-E-graf-3-13696213.pdf")
-    plt.savefig("./tarefa-E/tarefa-E-graf-3-13696213.png")
-    plt.clf()
+            plt.scatter(df[f"theta{j}"].to_numpy(),df[f"omega{j}"].to_numpy(),s=5-i)
+            plt.xlabel(r"$\theta$")
+            plt.ylabel(r"$\omega$")
+        #plt.savefig(f"./tarefa-E/tarefa-E-graf-{j}-13696213.pdf")
+        plt.savefig(f"./tarefa-E/tarefa-E-graf-{j}-13696213.png")
+        plt.clf()
 
 def min_quad(x,y):
     bar_x = sum(x)/len(x)

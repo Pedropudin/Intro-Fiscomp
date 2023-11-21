@@ -5,6 +5,7 @@
       parameter(al=9.8,g=9.8,am=1.0)
       open(10,file='saida-B3-13696213.csv')
       
+c     Declaração de Variáveis
       theta = 1d0
       omega = 0d0
       gamma = 1d0/2d0
@@ -35,5 +36,3 @@ c     Simulando movimento
       write(*,*) "Fim da Execução da Tarefa B3"
 
       end program tarefaB3
-
-      !plot funciona, só preciso ver qual tipo que é

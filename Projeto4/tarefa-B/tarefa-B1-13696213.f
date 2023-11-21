@@ -4,6 +4,7 @@
       parameter(al=9.8,g=9.8,am=1.0)
       open(10,file='saida-B1-13696213.csv')
       
+c     Declaração de Variáveis
       theta_0 = 0.2d0
       omega = 0d0
       gamma = 0d0
@@ -33,8 +34,6 @@ c     Resolvendo a Integral
       valor_N=valor_N+(h/3.)*(f(x-h,theta)+4.*f(x,theta)+f(x+h,theta))
       end do
       valor_N = sqrt((2.*al)/g)*valor_N
-c      write(*,*) "Período calculado com a integral",
-c     &valor_N + 2.*valor_A
 
 c     Simulando movimento
       do while(t.lt.t_final)
@@ -57,10 +56,6 @@ c     Simulando movimento
       t = t + passo
       end do
 
-      !Período
-c      write(*,*) "Período calculado com a simulação",
-c     &periodo/((ipos-1)/2)
-
       write(10,100) theta_0 + delta_theta*k,periodo/((ipos-1)/2),
      &valor_N + 2.*valor_A
 
@@ -80,5 +75,3 @@ c     &periodo/((ipos-1)/2)
       f = 1/sqrt(cos(x) - cos(theta))
       return
       end function
-      
-      !Acho que o período tá melhor agora

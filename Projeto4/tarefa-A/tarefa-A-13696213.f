@@ -2,7 +2,7 @@
       implicit real*8 (a-h,o-z)
 
 c     Definição de Constantes e abertura de arquivos
-      parameter(passo=1e-2,pi=4*atan(1d0),t_final=5d2)
+      parameter(passo=1e-2,pi=4*atan(1d0),t_final=1d2)
       parameter(al=9.8,g=9.8,am=1.0)
       open(10,file='saida-A-13696213.csv')
       

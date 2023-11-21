@@ -1,14 +1,12 @@
       program tarefaD
       implicit real*8(a-h,o-z)
       parameter(pi=4d0*atan(1d0))
-      parameter(passo=4e-2,t_final=1d2,N=3,M=5)
+      parameter(passo=4e-2,t_final=1d2,N=3,M=3)
       parameter(al=9.8,g=9.8)
       dimension F_0(N),theta(N),omega(N),theta_prox(N),omega_prox(N)
-      character(len=16)  pasta
-      character(len=45) arq
-      pasta="tarefa-D/saida-D"
+      character(len=60) arq
 
-      t = 0.0
+c     Declaração de Variáveis
       gama = 5d-2
       F_Omega=0.66
       delta_theta = 1d-3
@@ -22,11 +20,13 @@
 
       do k=0,M,1
 
-      write(arq,99) pasta,k
+      write(arq,99) k
       open(10*k,file=arq)
 
+      t = 0d0
       theta = theta_0 + delta_theta*k
       omega = omega_0
+
 c     Simulando movimento
       do while(t.lt.t_final)
 
@@ -41,11 +41,9 @@ c     Simulando movimento
 
       do while(theta_prox(i).gt.pi)
             theta_prox(i) = theta_prox(i) - 2d0*pi
-            ita = 1
       end do
       do while(theta_prox(i).lt.-1d0*pi)
             theta_prox(i) = theta_prox(i) + 2d0*pi
-            ita = 1
       end do
 
       omega(i) = omega_prox(i)
@@ -60,8 +58,8 @@ c     Simulando movimento
 
       end do
 
-99    format("./",A16,"/","saida-D-13696213-",I0,".csv")
-100   format(F20.12,",",F20.12)
+99    format("./tarefa-D/saida-D/saida-D-13696213-",I0,".csv")
+100   format(F20.12,5(",",F20.12))
 
       write(*,*) "Fim da Execução da Tarefa D"
 

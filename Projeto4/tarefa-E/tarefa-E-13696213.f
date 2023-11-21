@@ -1,14 +1,13 @@
       program tarefaE
       implicit real*8(a-h,o-z)
       parameter(pi=4d0*atan(1d0))
-      parameter(passo=4d-2,t_final=1d5,M=3)
+      parameter(passo=4d-2,t_final=1d5,M=3,N=3)
       parameter(al=9.8,g=9.8)
+      character(len=60) arq
       dimension omega(M),theta(M),omega_prox(M),theta_prox(M),F_0(M)
-      open(10,file='saida-E-13696213.csv')
 
-      t = 0d0
+c     Declaração de Variáveis
       gama = 5d-2
-      !F_Omega=2d0/3d0 !Não sei porque mas parece que não funciona assim
       F_Omega = 0.66d0
       delta_theta = 1d-3
 
@@ -16,6 +15,12 @@
       F_0(2) = 0.5d0
       F_0(3) = 1.2d0
 
+      do i=0,N,1
+
+      write(arq,99) i
+      open(10*i,file=arq)
+
+      t = 0d0
       theta = 1d0
       omega = 0d0
 
@@ -42,8 +47,9 @@ c     Simulando movimento
 
       end do
 
+c     Condição de Poincaré
       if(mod(t*F_Omega,pi).lt.passo/2d0) then
-      write(10,100) t,theta(1),omega(1),
+      write(10*i,100) t,theta(1),omega(1),
      &theta(2),omega(2),theta(3),omega(3)
       end if
 
@@ -51,16 +57,13 @@ c     Simulando movimento
 
       end do
 
-      close(10)
-      close(20)
+      close(10*i)
 
+      end do
+
+99    format("./tarefa-E/saida-E/saida-E-",I0,"-13696213.csv")
 100   format(F12.2,",",F15.10,5(",",F15.10))
 
       write(*,*) "Fim da Execução da Tarefa E"
 
       end program tarefaE
-
-      !Não faço ideia do motivo mas tô com um monte de 
-      !parasitas do lado negativo do gráfico, de resto tá normal
-
-      !No F_0=1.2 só tem os valores negativos, tá muito zuado
