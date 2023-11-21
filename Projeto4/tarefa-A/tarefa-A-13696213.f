@@ -1,4 +1,3 @@
-c     Simulação de Pêndulo com aproximação
       program tarefaA
       implicit real*8 (a-h,o-z)
 

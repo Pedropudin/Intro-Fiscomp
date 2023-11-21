@@ -35,11 +35,5 @@ c     Simulando movimento
       write(*,*) "Fim da Execução da Tarefa B3"
 
       end program tarefaB3
-      
-      function f(x,theta)
-      implicit real*8(a-h,o-z)
-      f = 1/sqrt(cos(x) - cos(theta))
-      return
-      end function
 
       !plot funciona, só preciso ver qual tipo que é

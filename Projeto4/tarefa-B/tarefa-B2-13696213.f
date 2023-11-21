@@ -10,7 +10,7 @@
       F_0 = 0d0
       F_Omega = 0d0
 
-      delta_theta = 1d-5
+      delta_theta = 1d-3
 
       theta = theta_0
 
